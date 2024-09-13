@@ -1,0 +1,28 @@
+footer{
+    background-color: #1D2939;
+    color: white;
+   
+    padding: 20px;
+    display: flex;
+    align-items: center;
+
+}
+
+
+
+.logo-img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+.brand-name{
+
+
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+ }
+ .copywrite{
+    color: var(--text-color);
+ }

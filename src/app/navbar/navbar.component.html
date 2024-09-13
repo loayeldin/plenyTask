@@ -1,0 +1,87 @@
+<nav>
+   
+    <div class="navbar">
+        <div class="container">
+           <div class="nav-content">
+                <div class="d-flex justify-content-between">
+                    <span class="d-flex justify-content-start align-items-center">
+                        <img class="logo-img" src="../../assets/Logomark.png" alt="">
+                        <span class="brand-name">ClickTik</span>
+                    </span>
+                    
+                    
+                        
+                    
+                    <div class="navbar-menu" (click)="openNav()"  >
+                        <svg xmlns="http://www.w3.org/2000/svg" height="22" width="35" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
+                    </div>
+
+                </div>
+                 
+                <ul class="left-side d-flex justify-content-start align-items-center flex-wrap ">
+                  
+
+                    <li>
+                        <a  routerLink="/home" [ngClass]="{'disabled-link': !loggedIn}">Home</a>
+                    </li>
+
+                    
+                </ul>
+        
+               
+                
+               
+                @if(isLoaded){
+                    <ul class="right-side  ">
+
+                        @if(loggedIn ){
+                            <li class="search" >
+                            
+                                <div class="input-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="14" width="14" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#434447" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+        
+                                
+        
+                               
+                                    <input type="search" placeholder="search"  (input)="search($event)" >
+        
+                                </div>
+                               
+                            </li>
+
+                            <li class="cart" >
+                                <a  href="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="17" width="20.5" viewBox="0 0 576 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#344054" d="M0 24C0 10.7 10.7 0 24 0L69.5 0c22 0 41.5 12.8 50.6 32l411 0c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3l-288.5 0 5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5L488 336c13.3 0 24 10.7 24 24s-10.7 24-24 24l-288.3 0c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5L24 48C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg> 
+                                     <span class="cart-count">{{userCartLength}}</span>
+                                </a>
+                            </li>
+                            <li >
+                                <a href="#">
+                                    Account
+                                </a>
+            
+                            </li>
+                        }
+
+                        
+                        
+    
+                       
+    
+                        
+    
+                
+                        @if(!loggedIn ){
+                            <li class="" routerLink="/login">
+                                <a >Log in</a>
+                            </li> 
+                        }
+    
+                    </ul>
+                }
+               
+           </div>
+        </div>       
+    </div>
+  
+  </nav>
