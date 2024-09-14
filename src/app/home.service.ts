@@ -98,7 +98,7 @@ getCookieData() {
       
       this.isLoggedIn.next(true);
       this.userLoggedData.next(newUser);
-      this.router.navigate(['/home']);
+      // this.router.navigate(['/home']);
     } catch (error) {
       console.error('Error parsing user data:', error);
       this.logOut();
@@ -119,7 +119,7 @@ getCookieData() {
     this.isLoggedIn.next(false);
     console.log(this.userLoggedData.value);
     
-    this.router.navigate(['/login']);
+    // this.router.navigate(['/login']);
   }
 
 

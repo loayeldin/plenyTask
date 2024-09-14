@@ -16,19 +16,19 @@ export class LoginComponent {
   constructor( private homeSerivce:HomeService){}
   passwordVisible = false;
   loginSub: Subscription = new Subscription(); // Initialize subscription
-  // loginForm = new FormGroup(
-  //   {
-  //     username:new FormControl('oliviaw', [Validators.required]),
-  //     password:new FormControl('oliviawpass',[Validators.required])
-  //   }
-  // )
-
   loginForm = new FormGroup(
     {
-      username:new FormControl('abigailr', [Validators.required]),
-      password:new FormControl('abigailrpass',[Validators.required])
+      username:new FormControl('oliviaw', [Validators.required]),
+      password:new FormControl('oliviawpass',[Validators.required])
     }
   )
+
+  // loginForm = new FormGroup(
+  //   {
+  //     username:new FormControl('abigailr', [Validators.required]),
+  //     password:new FormControl('abigailrpass',[Validators.required])
+  //   }
+  // )
   togglePasswordVisibility() { // togglePasswordVisibilityIcon 
     this.passwordVisible = !this.passwordVisible;
   }

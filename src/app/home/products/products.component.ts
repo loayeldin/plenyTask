@@ -17,7 +17,7 @@ export class ProductsComponent {
   total: number = 0;
   totalPages: number = 0;
   pages: (number | any)[] = []; 
-
+  isLoading = true;
   constructor(private homeService:HomeService){}
 
   ngOnInit(){
@@ -62,18 +62,21 @@ export class ProductsComponent {
     if (this.homeService.selectedCategory.value === 'all' && this.homeService.searchText.value ==='') {
       this.homeService.getAllProducts(this.limit, skip).subscribe(data => {
         this.homeService.updateProductsData(data);
+        this.isLoading = false; 
       });
     }
     else if (this.homeService.selectedCategory.value && this.homeService.searchText.value ==='') {
       this.homeService.getProductsByCategory(this.homeService.selectedCategory.value, this.limit, skip).subscribe(data => {
         this.homeService.updateProductsData(data);
-        console.log('wwwwwwwwwwwwwwwww');
+        this.isLoading = false; 
         
       });
     } 
     else if (this.homeService.searchText) {
       this.homeService.getProductsBySearch(this.homeService.searchText.value as string, this.limit, skip).subscribe(data => {
         this.homeService.updateProductsData(data);
+        this.isLoading = false; 
+
       });
     }
   
@@ -93,7 +96,7 @@ export class ProductsComponent {
 
     // Add "Prev" button
     if (page > 0) {
-        liTag.push({ label: 'Prev', value: page - 1, type: 'btn' });
+      liTag.push({ label: '‹', value: page - 1, type: 'btn' });
     }
 
     // Add "1" button and ellipsis before the current page if necessary
@@ -143,7 +146,7 @@ export class ProductsComponent {
 
     // Add "Next" button
     if (page < totalPages - 1) {
-        liTag.push({ label: 'Next', value: page + 1, type: 'btn' });
+      liTag.push({ label: '›', value: page + 1, type: 'btn' });
     }
 
     this.pages = liTag;
