@@ -2,6 +2,7 @@ import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { HomeService } from '../../home.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-categories',
@@ -15,30 +16,30 @@ export class CategoriesComponent {
   selectedCategory!:string 
   constructor(private homeSerivce:HomeService,private el:ElementRef,private renderer:Renderer2){}
   categories!:any
-  
+  subscriptions: Subscription = new Subscription();  
+
   ngOnInit(){
-    this.homeSerivce.getCategoriesList().subscribe(data=>{
-
-      this.categories = data
-      console.log(this.categories);
-      
-
-
-
-    },
-    error=>{
-      console.log(error);
-      
-    }
+    this.subscriptions.add(
+      this.homeSerivce.getCategoriesList().subscribe({
+        next: (data:[]) => {
+          this.categories = data;
+        },
+        error: (error:Error) => {
+          console.log(error);
+        }
+      })
     )
+    
 
 
 
     // get the default value for selected category
-    this.homeSerivce.selectedCategory.subscribe(data=>{
-      this.selectedCategory = data
-    })
-
+    this.subscriptions.add(
+      this.homeSerivce.selectedCategory.subscribe(data=>{
+        this.selectedCategory = data
+      })
+    )
+     
   }
 
 
@@ -59,17 +60,21 @@ export class CategoriesComponent {
     if(this.selectedCategory=='all'){
       // call getallprodcust method if user selet 'all' and update products data in service
 
-      this.homeSerivce.getAllProducts(pageLimit,0).subscribe(data=>{
-        this.homeSerivce.productsData.next(data)
-      })
+     this.subscriptions.add(
+        this.homeSerivce.getAllProducts(pageLimit,0).subscribe(data=>{
+          this.homeSerivce.productsData.next(data)
+        })
+     )
 
     }else{
       // call products by category method and update products data in service
-      this.homeSerivce.getProductsByCategory(this.selectedCategory,pageLimit,0).subscribe(data=>{
-        this.homeSerivce.productsData.next(data)
-        
-        
-      })
+      this.subscriptions.add(
+        this.homeSerivce.getProductsByCategory(this.selectedCategory,pageLimit,0).subscribe(data=>{
+          this.homeSerivce.productsData.next(data)
+          
+          
+        })
+      )
 
     }
     
@@ -91,6 +96,8 @@ export class CategoriesComponent {
     
     }
   }
-
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
 
 }

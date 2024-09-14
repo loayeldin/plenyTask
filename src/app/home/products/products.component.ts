@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { HomeService } from '../../home.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -10,6 +11,7 @@ import { HomeService } from '../../home.service';
   styleUrl: './products.component.scss'
 })
 export class ProductsComponent {
+  subscriptions: Subscription = new Subscription();  
 
   productsData!:any
   limit!: number;
@@ -22,30 +24,41 @@ export class ProductsComponent {
 
   ngOnInit(){
  
+    // get current page
+    this.subscriptions.add(
+      this.homeService.currentPage.subscribe(data=>{
+        this.currentPage = data
+      })
+    )
 
-    this.homeService.currentPage.subscribe(data=>{
-      this.currentPage = data
-    })
-    this.homeService.limit.subscribe(data=>{
-      this.limit = data
-    })
+
+
+    this.subscriptions.add(
+      
+      this.homeService.limit.subscribe(data=>{
+        this.limit = data
+      })
+    )
 
     // subscribe on products data to update the products if user make changes
-    this.homeService.productsData.subscribe(data=>{
-      this.productsData = data
-      console.log(data);
-      this.total = this.productsData.total;
-      this.totalPages = Math.ceil(this.total / this.limit);
+    this.subscriptions.add(
+      this.homeService.productsData.subscribe(data=>{
+        this.productsData = data
+      
+        this.total = this.productsData.total;
+        this.totalPages = Math.ceil(this.total / this.limit);
+  
+        this.createPagination(this.totalPages, this.currentPage);
+  
+  
+      })
+    )
 
-      this.createPagination(this.totalPages, this.currentPage);
-
-
-    })
     this.getProducts()
 
 
   }
-
+  // calc price before discount
   calcRealPrice(Price: number, discount: number)
   {
     const realPrice = Price - (Price * (discount / 100))
@@ -88,7 +101,7 @@ export class ProductsComponent {
 
 
   createPagination(totalPages: number, page: number): void {
-    console.log(this.currentPage);
+  
 
     let liTag = [];
     let beforePage = page - 1;
@@ -159,15 +172,12 @@ export class ProductsComponent {
     this.createPagination(this.totalPages, this.currentPage);
   }
 
-  isNumber(value: any): boolean {
-    return typeof value === 'number';
-  }
-
+ 
 
 
 
   addtoCart(index:number){
-    console.log(index);
+   
     
     const product = {
       id:this.productsData.products[index].id,
@@ -200,5 +210,11 @@ export class ProductsComponent {
     })
     
   }
+
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
 
 }

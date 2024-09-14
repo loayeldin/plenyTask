@@ -3,6 +3,7 @@ import { HomeService } from '../home.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -16,45 +17,48 @@ export class NavbarComponent {
   constructor(private homeSerivce:HomeService,private el: ElementRef ,private renderer: Renderer2){}
   userCartLength!:number
   loggedIn:boolean = false
+  loginSubscriptions: Subscription = new Subscription();
+
   userId!:number
   isLoaded:boolean = false
   ngOnInit(){
     
       
-    this.homeSerivce.isLoggedIn.subscribe(data=>{
-      this.loggedIn = data
-      
-      this.isLoaded = false
-      if(this.loggedIn)
-      {
-           // get user id from service
-        const userId = this.homeSerivce.userLoggedData.value.id
+    this.loginSubscriptions = 
+        this.homeSerivce.isLoggedIn.subscribe(data=>{
+          this.loggedIn = data
+          
+          this.isLoaded = false
+          if(this.loggedIn)
+          {
+              // get user id from service
+            const userId = this.homeSerivce.userLoggedData.value.id
 
-         // get user cart length
-        this.homeSerivce.getUserCart(userId).subscribe(data=>{
+            // get user cart length
+            this.homeSerivce.getUserCart(userId).subscribe(data=>{
 
-          if(data.carts.length !==0){
-            this.userCartLength = data.carts[0].totalProducts
+              if(data.carts.length !==0){
+                this.userCartLength = data.carts[0].totalProducts
+              }else{
+                this.userCartLength =0
+              }
+            
+              this.homeSerivce.userCartResponse.next(data)
+
+              this.isLoaded = true
+            })
           }else{
-            this.userCartLength =0
-          }
-         
-          this.homeSerivce.userCartResponse.next(data)
-
-          this.isLoaded = true
-        })
-      }else{
-    
+        
+          
       
-  
-      this.isLoaded = true
-      }
+          this.isLoaded = true
+          }
 
 
 
-   
-     
-    })
+      
+        
+        })
 
    
    
@@ -81,7 +85,7 @@ export class NavbarComponent {
     // set current page to default (0)
     this.homeSerivce.currentPage.next(0) 
     this.homeSerivce.getProductsBySearch(inputValue,pageLimit,currentPage).subscribe(data=>{
-      console.log(data);
+     
       
       // update products data
       this.homeSerivce.updateProductsData(data)
@@ -105,6 +109,8 @@ export class NavbarComponent {
       this.renderer.addClass(leftside, 'show');
     }
   }
-  
+  ngOnDestroy() {
+    this.loginSubscriptions.unsubscribe();
+  }
 
 }

@@ -10,7 +10,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   const isUserAuth = cookieService.get('userData');
   if (isUserAuth) {
     try{
-      console.log('from guard auth true');
       
       router.navigate(['/home']);  // Redirect to home if already authenticated
       return false;

@@ -91,7 +91,7 @@
     }
     /*end  common classes for flexbox to prevent duplicates*/
 
-   /* Media query for tablets */
+  
    @media (max-width: 1200px) {
     .container {
         width: 95%;
@@ -99,14 +99,14 @@
 }
 
 
-    /* Media query for tablets */
+  
     @media (max-width: 992px) {
         .container {
             width: 98%;
         }
     }
     
-    /* Media query for mobile phones */
+   
     @media (max-width: 576px) {
         .container {
             width: 99%;

@@ -21,7 +21,7 @@ p{
     
     }
 
-    /* Media query for tablets */
+    
     @media (max-width: 992px) {
         .grid-container{
          
@@ -33,7 +33,7 @@ p{
     @media (max-width: 768px) {
         .grid-container{
          
-            // grid-template-columns: 40% 60%;
+          
             grid-template-columns: 100%;
           
         }
@@ -41,12 +41,4 @@ p{
     }
 
 
-    /* Media query for mobile phones */
-    @media (max-width: 576px) {
-        // .grid-container{
-        //     display: grid;
-        //     grid-template-columns: 25% 75%;
-        //     column-gap: 20px;
-        // }
-    }
-    
+ 

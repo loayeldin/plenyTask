@@ -1,16 +1,12 @@
 
 
 .navbar {
-    // position: fixed;
-    // width: 100%;
+   
     background-color: #fff;
     border-bottom: 1px solid #ddd;
     
     .nav-content{
-        // display: flex;
-        // justify-content: space-between;
-        // flex-wrap: wrap;
-        // align-items: center;
+        
         display: grid;
         grid-template-columns: 10% 50% 50%;
         padding: 15px;
@@ -118,8 +114,7 @@
             width: 12px;
             height: 12px;
             background-color: var(--main-color);
-            // top: -7px;
-            // right: -3px;
+          
             top:-40%;
             right: -10%;
             border-radius: 50%;
@@ -210,19 +205,10 @@
             overflow: hidden;
             transition: opacity 0.3s ease, height 0.3s ease;
           }
-    // .left-side{
-    //     // justify-content: space-between !important;
-    //     display: none;
-      
-    // }
+    
     .nav-content{
         grid-template-columns: 100% !important;
         row-gap: 10px;
-    }
-    // .right-side{
-    //     display: none;
-    // }
-    li{
     }
     .cart{
         margin-top: 10px !important;

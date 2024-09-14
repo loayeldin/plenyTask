@@ -15,7 +15,7 @@ export class LoginComponent {
 
   constructor( private homeSerivce:HomeService){}
   passwordVisible = false;
-  loginSub: Subscription = new Subscription(); // Initialize subscription
+  loginSub: Subscription = new Subscription();
   loginForm = new FormGroup(
     {
       username:new FormControl('oliviaw', [Validators.required]),

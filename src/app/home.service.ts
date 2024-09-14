@@ -32,7 +32,7 @@ export class HomeService {
   {
     this.isLoading.next(true); // Set loading to true
 
-    console.log(userData);
+   
     
     return this.http.post('https://dummyjson.com/auth/login',userData)
     .pipe(
@@ -54,7 +54,6 @@ export class HomeService {
      
     const newUser:user = resData
     this.userLoggedData.next(newUser) // update the BehaviorSubject with values
-    console.log(this.userLoggedData.value);
     this.isLoggedIn.next(true) 
     this.setCookie(resData) // set data in local cookies
     
@@ -71,7 +70,6 @@ export class HomeService {
       expires.setTime(expires.getTime() + (expiresInMinutes * 60 * 1000)); // 60 minutes converted to milliseconds
 
       this.cookieService.set('userData', JSON.stringify(resData), { expires: expires, path: '/' });
-      console.log('User data added to cookies');
       
       
       this.router.navigate(['/home']);
@@ -89,37 +87,36 @@ export class HomeService {
 getCookieData() {
   const userData = this.cookieService.get('userData');
   
-  console.log('Retrieved userData from cookies:', userData);
 
   if (userData) {
     try {
       const newUser: user = JSON.parse(userData);
-      console.log('Parsed user data:', newUser);
+     
       
       this.isLoggedIn.next(true);
       this.userLoggedData.next(newUser);
-      // this.router.navigate(['/home']);
+      
     } catch (error) {
-      console.error('Error parsing user data:', error);
+     
       this.logOut();
     }
   } else {
-    console.log('No userData found in cookies.');
+    
     this.logOut();
   }
 }
  
 
   logOut() {
-    console.log('logout');
+   
     
     // Clear user data and cookies
     this.userLoggedData.next(<user>({}));
     this.cookieService.delete('userData');
     this.isLoggedIn.next(false);
-    console.log(this.userLoggedData.value);
+  
     
-    // this.router.navigate(['/login']);
+   
   }
 
 
@@ -134,17 +131,17 @@ getCookieData() {
   {
     
     let params = new HttpParams()
-    .set('limit', limit.toString())  // Setting 'limit' parameter
-    .set('skip', skip.toString())  // Setting 'skip' parameter
+    .set('limit', limit.toString())  
+    .set('skip', skip.toString())  
   
     
-  // 
+ 
 
     return this.http.get('https://dummyjson.com/products',
     {
       params
     }
-    ) // ?limit=10&skip for pagination
+    ) 
   }
 
 
@@ -152,8 +149,8 @@ getCookieData() {
   {
    
     let params = new HttpParams()
-    .set('limit', limit.toString())  // Setting 'limit' parameter
-    .set('skip', skip.toString())  // Setting 'skip' parameter
+    .set('limit', limit.toString()) 
+    .set('skip', skip.toString())  
   
     return this.http.get(`https://dummyjson.com/products/category/${cat}`,{params})
   }
@@ -161,9 +158,9 @@ getCookieData() {
   getProductsBySearch(userInput:string,limit:number,skip:number)
   {
     let params = new HttpParams()
-    .set('limit', limit.toString())  // Setting 'limit' parameter
-    .set('skip', skip.toString())  //
-    console.log(userInput);
+    .set('limit', limit.toString())  
+    .set('skip', skip.toString())  
+    
     
     return this.http.get(`https://dummyjson.com/products/search?q=${userInput}`,{params})
   }
@@ -173,7 +170,7 @@ getCookieData() {
 
   getUserCart(userId:number):Observable<any>
   {
-    console.log(userId);
+    
     
 
     return this.http.get(`https://dummyjson.com/carts/user/${userId}`)
@@ -182,7 +179,7 @@ getCookieData() {
 
   updateUserCart(product:{},cartId:number):Observable<any>
   {
-    console.log(cartId);
+    
     
     return this.http.put(`https://dummyjson.com/carts/${cartId}`,{
       merge:true,

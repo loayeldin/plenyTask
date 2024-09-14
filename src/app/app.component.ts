@@ -22,10 +22,10 @@ export class AppComponent {
   ngOnInit() {
     this.homeService.getCookieData()
 
-  setTimeout(() => {
-    this.isLoading = false;
-  }, 400);         
-    
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 500);         
+      
     
 
   }
